@@ -1,7 +1,7 @@
 package com.main.ui;
 
 public class HannoiFinalWhile {
-	boolean flag = true; //这个是整个转非递归的精髓之处
+	boolean flag = true; //
 	String a ="";
 	String b="";
 	String c="";
