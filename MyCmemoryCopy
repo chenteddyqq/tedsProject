@@ -1,0 +1,22 @@
+#include <stdio.h>
+
+void memcopy(const void *p1,const void *p2,int length){
+    char *inp1 = (char *)p1;
+    char *inp2 = (char *)p2;
+    
+    for (int i=0; i<length; i++) {
+        
+        *(inp1+i) = *(inp2+i);
+    }
+}
+
+int main(int arg, char * argv[]){
+    double p1 =3.1415926;
+    double p2 =2.887;
+    
+    memcopy(&p2,&p1,sizeof(p1));
+    printf("%.8f\n",p1);
+    printf("%.8f\n",p2);
+    
+    return 0;
+}
