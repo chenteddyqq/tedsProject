@@ -1,0 +1,98 @@
+#include <stdio.h>
+#include <stdlib.h>
+
+int main(int argc, const char * argv[]){
+    char a[7][11]={"##########",
+        "##     ###",
+        "##O##    #",
+        "# S O  O #",
+        "# **# O ##",
+        "##**#   ##",
+        "##########"
+    };
+    char flag=' ';
+    int sx,sy;
+    sx = 3;
+    sy = 2;
+    while (1) {
+        system("clear");
+        if (a[4][2]=='O'&&a[4][3]=='O'&&a[5][2]=='O'&&a[5][3]=='O') {
+            for (int i=0; i<7; i++) {
+                puts(a[i]);
+            }
+            printf("游戏结束啦！");
+            break;
+        }
+        for (int i=0; i<7; i++) {
+            puts(a[i]);
+        }
+        
+        printf("请输入方向:\n");
+        scanf("%c",&flag);
+        if (flag == 'w') {
+            if (a[sx-1][sy] == ' ' || a[sx-1][sy] == '*') {
+                a[sx][sy] = ' ';
+                sx -= 1;
+                a[sx][sy] = 'S';
+            }
+            else if (a[sx-1][sy] == 'O' && (a[sx-2][sy] == ' ' || a[sx-2][sy] == '*')) {
+                a[sx-2][sy] = 'O';
+                a[sx][sy] = ' ';
+                sx -= 1;
+                a[sx][sy] = 'S';
+            }
+        }
+        if (flag == 'a') {
+            if (a[sx][sy-1] == ' ' || a[sx][sy-1] == '*') {
+                a[sx][sy] = ' ';
+                sy -= 1;
+                a[sx][sy] = 'S';
+            }
+            else if (a[sx][sy-1] == 'O' && (a[sx][sy-2] == ' ' || a[sx][sy-2] == '*')) {
+                a[sx][sy-2] = 'O';
+                a[sx][sy] = ' ';
+                sy -= 1;
+                a[sx][sy] = 'S';
+            }
+        }
+        if (flag == 's') {
+            if (a[sx+1][sy] == ' ' || a[sx+1][sy] == '*') {
+                a[sx][sy] = ' ';
+                sx += 1;
+                a[sx][sy] = 'S';
+            }
+            else if (a[sx+1][sy] == 'O' && (a[sx+2][sy] == ' ' || a[sx+2][sy] == '*')) {
+                a[sx+2][sy] = 'O';
+                a[sx][sy] = ' ';
+                sx += 1;
+                a[sx][sy] = 'S';
+            }
+        }
+        if (flag == 'd') {
+            if (a[sx][sy+1] == ' ' || a[sx][sy+1] == '*') {
+                a[sx][sy] = ' ';
+                sy += 1;
+                a[sx][sy] = 'S';
+            }
+            else if (a[sx][sy+1] == 'O' && (a[sx][sy+2] == ' ' || a[sx][sy+2] == '*')) {
+                a[sx][sy+2] = 'O';
+                a[sx][sy] = ' ';
+                sy += 1;
+                a[sx][sy] = 'S';
+            }
+        }
+        if (a[4][2]==' ') {
+            a[4][2]='*';
+        }
+        if (a[4][3]==' ') {
+            a[4][3]='*';
+        }
+        if (a[5][2]==' ') {
+            a[5][2]='*';
+        }
+        if (a[5][3]==' ') {
+            a[5][3]='*';
+        }
+    }
+    return 0;
+}
