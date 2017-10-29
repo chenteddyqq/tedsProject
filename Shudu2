@@ -1,0 +1,239 @@
+#include <stdio.h>
+
+int shudu[9][9]={
+    /*{8,0,0,0,0,0,0,0,0},
+    {0,0,3,6,0,0,0,0,0},
+    {0,7,0,0,9,0,2,0,0},
+    {0,5,0,0,0,7,0,0,0},
+    {0,0,0,0,4,5,7,0,0},
+    {0,0,0,1,0,0,0,3,0},
+    {0,0,1,0,0,0,0,6,8},
+    {0,0,8,5,0,0,0,1,0},
+    {0,9,0,0,0,0,4,0,0}
+    
+    {1,2,0,4,0,0,3,0,0},
+    {3,0,0,0,1,0,0,5,0},
+    {0,0,6,0,0,0,1,0,0},
+    {7,0,0,0,9,0,0,0,0},
+    {0,4,0,6,0,3,0,0,0},
+    {0,0,3,0,0,2,0,0,0},
+    {5,0,0,0,8,0,7,0,0},
+    {0,0,7,0,0,0,0,0,5},
+    {0,0,0,0,0,0,0,9,8}*/
+    
+    {0,0,0,0,0,0,0,6,0},
+    {0,0,0,0,0,4,7,0,5},
+    {5,0,0,0,0,0,1,0,4},
+    {1,0,0,0,0,2,4,0,0},
+    {0,0,8,0,7,0,0,0,0},
+    {0,3,0,6,0,0,0,0,0},
+    {2,0,0,0,0,9,0,0,0},
+    {0,0,6,0,8,0,0,0,0},
+    {0,7,0,3,0,0,0,0,0}
+};
+
+int count = 0;
+
+
+int injudge(int x1,int x2,int y1,int y2,int num){
+    for (int i=x1; i<=x2; i++) {
+        for (int j=y1; j<=y2; j++) {
+            if (shudu[i][j]==num) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+int judgeXY(int x,int y, int num){
+    if (num!=0) {
+        for (int i=0; i<9; i++) {
+            if (shudu[i][y] == num) {
+                return 1;
+            }
+        }
+        for (int i=0; i<9; i++) {
+            if (shudu[x][i] == num) {
+                return 1;
+            }
+        }
+    }
+    return 0;
+}
+
+//分为九块，分别填数字1-9
+void bp(int num, int block){
+    if (num ==10) {
+        count++;
+        for (int i=0; i<9; i++) {
+            for (int j=0; j<9; j++) {
+                printf("%d ",shudu[i][j]);
+            }
+            printf("\n");
+        }
+        printf("#END\n");
+        return;
+    }
+
+    if (block == 1) {
+        if(injudge(0, 2, 0, 2, num)==1){
+            bp(num, 2);
+        }else{
+            for (int i=0; i<=2; i++) {
+                for (int j=0; j<=2; j++) {
+                    if (shudu[i][j]==0&&judgeXY(i,j, num)==0) {
+                        shudu[i][j]=num;
+                        bp(num, 2);
+                        shudu[i][j]=0;
+                    }
+                }
+            }
+            return;
+        }
+    }
+    
+    if (block == 2) {
+        if(injudge(0, 2, 3, 5, num)==1){
+            bp(num, 3);
+        }else{
+            for (int i=0; i<=2; i++) {
+                for (int j=3; j<=5; j++) {
+                    if (shudu[i][j]==0&&judgeXY(i,j, num)==0) {
+                        shudu[i][j]=num;
+                        bp(num, 3);
+                        shudu[i][j]=0;
+                    }
+                }
+            }
+            return;
+        }
+    }
+    
+    if (block == 3) {
+        if(injudge(0, 2, 6, 8, num)==1){
+            bp(num, 4);
+        }else{
+            for (int i=0; i<=2; i++) {
+                for (int j=6; j<=8; j++) {
+                    if (shudu[i][j]==0&&judgeXY(i,j, num)==0) {
+                        shudu[i][j]=num;
+                        bp(num, 4);
+                        shudu[i][j]=0;
+                    }
+                }
+            }
+            return;
+        }
+    }
+    
+    if (block == 4) {
+        if(injudge(3, 5, 0, 2, num)==1){
+            bp(num, 5);
+        }else{
+            for (int i=3; i<=5; i++) {
+                for (int j=0; j<=2; j++) {
+                    if (shudu[i][j]==0&&judgeXY(i,j, num)==0) {
+                        shudu[i][j]=num;
+                        bp(num, 5);
+                        shudu[i][j]=0;
+                    }
+                }
+            }
+            return;
+        }
+    }
+    
+    if (block == 5) {
+        if(injudge(3, 5, 3, 5, num)==1){
+            bp(num, 6);
+        }else{
+            for (int i=3; i<=5; i++) {
+                for (int j=3; j<=5; j++) {
+                    if (shudu[i][j]==0&&judgeXY(i,j, num)==0) {
+                        shudu[i][j]=num;
+                        bp(num, 6);
+                        shudu[i][j]=0;
+                    }
+                }
+            }
+            return;
+        }
+    }
+    
+    if (block == 6) {
+        if(injudge(3, 5, 6, 8, num)==1){
+            bp(num, 7);
+        }else{
+            for (int i=3; i<=5; i++) {
+                for (int j=6; j<=8; j++) {
+                    if (shudu[i][j]==0&&judgeXY(i,j, num)==0) {
+                        shudu[i][j]=num;
+                        bp(num, 7);
+                        shudu[i][j]=0;
+                    }
+                }
+            }
+            return;
+        }
+    }
+    
+    if (block == 7) {
+        if(injudge(6, 8, 0, 2, num)==1){
+            bp(num, 8);
+        }else{
+            for (int i=6; i<=8; i++) {
+                for (int j=0; j<=2; j++) {
+                    if (shudu[i][j]==0&&judgeXY(i,j, num)==0) {
+                        shudu[i][j]=num;
+                        bp(num, 8);
+                        shudu[i][j]=0;
+                    }
+                }
+            }
+            return;
+        }
+    }
+    
+    if (block == 8) {
+        if(injudge(6, 8, 3, 5, num)==1){
+            bp(num, 9);
+        }else{
+            for (int i=6; i<=8; i++) {
+                for (int j=3; j<=5; j++) {
+                    if (shudu[i][j]==0&&judgeXY(i,j, num)==0) {
+                        shudu[i][j]=num;
+                        bp(num, 9);
+                        shudu[i][j]=0;
+                    }
+                }
+            }
+            return;
+        }
+    }
+    
+    if (block == 9) {
+        if(injudge(6, 8, 6, 8, num)==1){
+            bp(num+1, 1);
+        }else{
+            for (int i=6; i<=8; i++) {
+                for (int j=6; j<=8; j++) {
+                    if (shudu[i][j]==0&&judgeXY(i,j, num)==0) {
+                        shudu[i][j]=num;
+                        bp(num+1, 1);
+                        shudu[i][j]=0;
+                    }
+                }
+            }
+            return;
+        }
+    }
+    
+}
+
+
+int main(int arg,char * argc[]){
+    bp(1, 1);
+    printf("%d\n",count);
+    return 0;
+}
