@@ -1,0 +1,47 @@
+#include <stdio.h>
+#define length 8
+
+int map[length][length];
+
+int flag[length]={0};
+
+int xaddy[100]={0};
+
+int xsuby[100]={0};
+int count =0;
+void bp(int step){
+    if (step == length) {
+        count++;
+        for (int i=0; i<length; i++) {
+            for (int j=0; j<length; j++) {
+                printf("%d ",map[i][j]);
+            }
+            printf("\n");
+        }
+        printf("#END\n");
+        return;
+    }
+    //这step其实y,i就是x
+    for (int i=0; i<length; i++) {
+        if (flag[i]!=1 && xaddy[i+step]!=1 && xsuby[i-step+length-1]!=1) {
+            flag[i]=1;
+            xaddy[i+step]=1;
+            xsuby[i-step+length-1]=1;
+            map[i][step]=1;
+            
+            bp(step+1);//(x,y)
+            
+            flag[i]=0;
+            xaddy[i+step]=0;
+            xsuby[i-step+length-1]=0;
+            map[i][step]=0;
+        }
+    }
+}
+
+
+int main(int arg, char * argv[]){
+    bp(0);
+    printf("%d\n",count);
+    return 0;
+}
