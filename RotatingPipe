@@ -1,0 +1,134 @@
+#include <stdio.h>
+
+struct potResult {
+    int x;
+    int y;
+    int status;
+} pots[100];
+
+int map[5][4] ={
+    {4,3,5,3},
+    {1,5,3,0},
+    {2,3,5,1},
+    {6,1,1,1},
+    {1,5,5,4}
+};
+
+int flag[5][4] ={
+    {0},
+    {0},
+    {0},
+    {0},
+    {0}
+};
+
+void bp(int step, int x, int y, int status){//xy是这步，sta是上步四方向来
+    if (x==4 && y==3) {
+        if (status==3 && (map[x][y]==5 ||map[x][y]==6)) {
+            pots[step].x=x;
+            pots[step].y=y;
+            pots[step].status=5;
+            for (int i=0; i<=step; i++) {
+                printf("(%d,%d)(%d) ",pots[i].x,pots[i].y,pots[i].status);
+            }
+            return;//这是最终的结束
+        }
+        if (status==4 && (map[x][y]!=5 &&map[x][y]!=6)) {
+            pots[step].x=x;
+            pots[step].y=y;
+            pots[step].status=1;
+            for (int i=0; i<=step; i++) {
+                printf("(%d,%d)(%d) ",pots[i].x,pots[i].y,pots[i].status);
+            }
+            return;//这是最终的结束
+        }
+    }
+    
+    //下面就是一般的判断了
+    if (x<0 || x>4 || y<0 || y>3 ||map[x][y]==0 ||flag[x][y]==1) {
+        return;
+    }
+    
+    if (status ==1) {
+        pots[step].x=x;
+        pots[step].y=y;
+        if (map[x][y]!=5 && map[x][y]!=6) {
+            pots[step].status=1;
+            flag[x][y]=1;
+            bp(step+1, x-1, y, 2);
+            
+            pots[step].status=2;
+            bp(step+1, x+1, y, 4);
+            flag[x][y]=0;
+        }else{
+            pots[step].status=5;
+            flag[x][y]=1;
+            bp(step+1, x, y-1, 1);
+            flag[x][y]=0;
+        }
+    }
+    
+    if (status ==2) {
+        pots[step].x=x;
+        pots[step].y=y;
+        if (map[x][y]!=5 && map[x][y]!=6) {
+            pots[step].status=2;
+            flag[x][y]=1;
+            bp(step+1, x, y+1, 3);
+            
+            pots[step].status=3;
+            bp(step+1, x, y-1, 1);
+            flag[x][y]=0;
+        }else{
+            pots[step].status=6;
+            flag[x][y]=1;
+            bp(step+1, x-1, y, 2);
+            flag[x][y]=0;
+        }
+    }
+    
+    if (status ==3) {
+        pots[step].x=x;
+        pots[step].y=y;
+        if (map[x][y]!=5 && map[x][y]!=6) {
+            pots[step].status=3;
+            flag[x][y]=1;
+            bp(step+1, x+1, y, 4);
+            
+            pots[step].status=4;
+            bp(step+1, x-1, y, 2);
+            flag[x][y]=0;
+        }else{
+            pots[step].status=5;
+            flag[x][y]=1;
+            bp(step+1, x, y+1, 3);
+            flag[x][y]=0;
+        }
+    }
+    
+    if (status ==4) {
+        pots[step].x=x;
+        pots[step].y=y;
+        if (map[x][y]!=5 && map[x][y]!=6) {
+            pots[step].status=1;
+            flag[x][y]=1;
+            bp(step+1, x, y+1, 3);
+            
+            pots[step].status=4;
+            bp(step+1, x, y-1, 1);
+            flag[x][y]=0;
+        }else{
+            pots[step].status=6;
+            flag[x][y]=1;
+            bp(step+1, x+1, y, 4);
+            flag[x][y]=0;
+        }
+    }
+
+}
+
+int main(int arg, char * argv[]){
+    bp(0, 0, 0, 3);
+    
+    return 0;
+}
