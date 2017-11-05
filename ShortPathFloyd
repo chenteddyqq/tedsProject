@@ -1,0 +1,36 @@
+//  我称之为漫散式的联通思想，以一个点联通周围的相邻点，并记录最短路径。在扩散下一个点。千万注意，这个三层循环的次序是不能颠倒的。
+//  但是从i点扩散的顺序是没有关系的
+
+#include <stdio.h>
+#define size 5
+#define M 999999
+
+int map[size][size]={
+    {0,M,M,1,M},
+    {M,0,3,M,2},
+    {M,3,0,1,M},
+    {1,M,1,0,M},
+    {M,2,M,M,0}
+};
+
+int main(int arg, char *argc[]){
+    for (int k=0; k<size; k++) { //这里的位置是不能变换的，但是0-9 9-0这样是没关系的
+        for (int i=0; i<size; i++) {
+            for (int j=0; j<size; j++) {
+                
+                if (map[i][j]>map[i][k]+map[k][j] && map[i][k]<M && map[k][i]) {
+                    map[i][j]=map[i][k]+map[k][j];
+                }
+            }
+        }
+        for (int i=0; i<size; i++) {
+            for (int j=0; j<size; j++) {
+                if(map[i][j] == M)
+                    printf("M ");
+                else
+                    printf("%d ",map[i][j]);
+            }
+            printf("\n");
+        }
+    }
+}
