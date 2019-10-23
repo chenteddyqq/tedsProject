@@ -1,0 +1,65 @@
+git@github.com:chenteddyqq/monsters-rolodex.git 先建立一个Repository
+
+git remote add origin git@github.com:chenteddyqq/monster-rolodex.git 
+
+yarn add gh-pages 加gh-pages包
+
+在package.json里面加上
+"homepage": "https://chenteddyqq.github.io/monsters-rolodex",
+"scripts": {
+    "predeploy": "yarn build",
+    "deploy": "gh-pages -d build"
+  },
+
+git add -A
+git commit -m "adding file for github"
+git push origin master
+
+
+
+
+
+
+
+
+
+
+
+Yarn和npm命令对比
+Install dependencies from package.json: npm install == yarn
+
+Install a package and add to package.json: npm install package --save == yarn add package
+
+Install a devDependency to package.json: npm install package --save-dev == yarn add package --dev
+
+Remove a dependency from package.json: npm uninstall package --save == yarn remove package
+
+Upgrade a package to its latest version: npm update --save == yarn upgrade
+
+Install a package globally: npm install package -g == yarn global add package
+
+
+
+ssh-keygen -t rsa -C “你的用户名”
+最后得到了两个文件：id_rsa和id_rsa.pub 
+>cat id_rsa.pub 看下这个公钥，加入到git你的帐户里面
+
+
+git clone git@地址 本地文件夹的名字 		从clone的那里下下来的 （yarn用来安装缺少的包）
+git remote   这个命令是看有没有origin
+git remote remove origin			这个用来把下载下来的code的remote移除，好传到自己的上面
+git remote add origin git@SSH地址
+git add -A
+git commit -m "adding file for github"
+git push origin master
+
+
+git pull origin 1023 下载并合并 某个分支
+git check out 分支名  :  切换到某个分支
+git branch -r  看所有的branch远程分支
+
+创建react 项目 npx create-react-app 自己的项目名
+
+如果遇到项目的包报错，按下面的处理
+rm -rf yarn.lock
+rm -rf node_modules
